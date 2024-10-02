@@ -38,6 +38,9 @@
                 <t t-set="vals" t-value="vals + [nutritional_value]" />
             </t>
         </t>
+        <t t-else="">
+            <t t-set="vals" t-value="doc.nutritional_value_ids" />
+        </t>
         <t t-set="vals" t-value="sorted(vals, key=lambda v: v.sequence)" />
         <!-- End of Combination -->
         <table class="nutrition-table">
