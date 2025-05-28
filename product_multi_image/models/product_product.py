@@ -15,8 +15,6 @@ class ProductProduct(models.Model):
         inverse="_inverse_image_ids",
     )
 
-    # image, image_medium, image_small fields are not available since 13.0
-
     @api.depends(
         "product_tmpl_id",
         "product_tmpl_id.image_ids",
@@ -26,19 +24,21 @@ class ProductProduct(models.Model):
         for product in self:
             images = product.product_tmpl_id.image_ids.filtered(
                 lambda x: (
-                    not x.product_variant_ids or product.id in x.product_variant_ids.ids
+                    not x.product_variant_ids or product.id in x.product_variant_ids.ids  # noqa: B023
                 )
             )
             product.image_ids = [(6, 0, images.ids)]
             if product.image_ids:
-                product.image_1920 = product.image_ids[0].image_main
+                product.image_1920 = (
+                    product.image_ids[0].with_context(bin_size=False).image_1920
+                )
 
     def _inverse_image_ids(self):
         for product in self:
             # Remember the list of images that were before changes
             previous_images = product.product_tmpl_id.image_ids.filtered(
                 lambda x: (
-                    not x.product_variant_ids or product.id in x.product_variant_ids.ids
+                    not x.product_variant_ids or product.id in x.product_variant_ids.ids  # noqa: B023
                 )
             )
             for image in product.image_ids:
@@ -66,7 +66,7 @@ class ProductProduct(models.Model):
                     # Leave the images for the rest of the variants
                     image.product_variant_ids = [(6, 0, variants.ids)]
             product.image_1920 = (
-                False if len(product.image_ids) < 1 else product.image_ids[0].image_main
+                False if len(product.image_ids) < 1 else product.image_ids[0].image_1920
             )
 
     def unlink(self):
@@ -75,7 +75,7 @@ class ProductProduct(models.Model):
         for product in self:
             images2remove = product.image_ids.filtered(
                 lambda image: (
-                    product in image.product_variant_ids
+                    product in image.product_variant_ids  # noqa: B023
                     and len(image.product_variant_ids) == 1
                 )
             )

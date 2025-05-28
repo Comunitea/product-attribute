@@ -4,15 +4,16 @@
 
 {
     "name": "Multiple Images in Products",
-    "version": "15.0.1.0.0",
+    "version": "17.0.1.0.0",
     "author": "Antiun Ingeniería, "
     "Tecnativa, "
     "LasLabs, "
     "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/product-attribute",
-    "category": "Sales Management",
-    "pre_init_hook": "pre_init_hook",
+    "category": "Product",
+    "summary": "Add multiple images for a product, a.k.a. an image gallery.",
+    "post_init_hook": "post_init_hook",
     "uninstall_hook": "uninstall_hook",
     "depends": [
         "base_multi_image",
@@ -23,10 +24,4 @@
         "views/product_template_view.xml",
     ],
     "installable": True,
-    "images": [
-        "images/product.png",
-        "images/db.png",
-        "images/file.png",
-        "images/url.png",
-    ],
 }
