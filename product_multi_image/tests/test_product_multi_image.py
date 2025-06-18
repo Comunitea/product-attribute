@@ -144,7 +144,8 @@ class TestProductMultiImage(common.TransactionCase):
         self.assertEqual(
             len(template.image_ids),
             1,
-            f"Product template did not start with singleton image_ids. Got {template.image_ids}",
+            f"Product template did not start with singleton image_ids. "
+            f"Got {template.image_ids}",
         )
         template.write(
             {
