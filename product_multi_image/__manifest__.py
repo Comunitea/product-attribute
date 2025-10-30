@@ -13,7 +13,6 @@
     "website": "https://github.com/OCA/product-attribute",
     "category": "Product",
     "summary": "Add multiple images for a product, a.k.a. an image gallery.",
-    "post_init_hook": "post_init_hook",
     "uninstall_hook": "uninstall_hook",
     "depends": [
         "base_multi_image",
